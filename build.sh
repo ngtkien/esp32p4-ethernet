@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+# Source Zephyr environment
+if [[ -f "$WORKSPACE_ROOT/zephyr-env.sh" ]]; then
+    # shellcheck disable=SC1091
+    source "$WORKSPACE_ROOT/zephyr-env.sh"
+else
+    echo "ERROR: zephyr-env.sh not found at $WORKSPACE_ROOT" >&2
+    exit 1
+fi
+
+BOARD="${BOARD:-esp32p4_function_ev_board/esp32p4/hpcore}"
+BUILD_DIR="${BUILD_DIR:-$SCRIPT_DIR/build}"
+
+echo "=========================================="
+echo " Building ESP32-P4 Ethernet Application"
+echo " Board:     $BOARD"
+echo " Build Dir: $BUILD_DIR"
+echo "=========================================="
+
+west build \
+    --sysbuild \
+    --pristine=auto \
+    --board "$BOARD" \
+    --build-dir "$BUILD_DIR" \
+    "$SCRIPT_DIR" "$@"
+
+echo ""
+echo "Build complete! To flash to ESP32-P4 on /dev/ttyUSB2, run:"
+echo "  ./flash.sh"

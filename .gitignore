@@ -1,0 +1,13 @@
+# Zephyr & Sysbuild build directories
+build/
+twister-out/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# IDE / Editor artifacts
+.vscode/
+.idea/
+*.swp
+*~
