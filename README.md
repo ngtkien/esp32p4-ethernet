@@ -6,7 +6,7 @@ This sample application demonstrates **100BASE-TX Ethernet networking via RMII**
 
 ## Hardware Compatibility
 
-- **Target Board**: ESP32-P4 Function EV Board (`esp32p4_function_ev_board/esp32p4/hpcore`)
+- **Target Board**: ESP32-P4 Function EV Board (`esp32p4_function_ev_v1/esp32p4/hpcore`)
 - **Silicon Version**: ESP32-P4 v1.0 / v1.3 (ECO2 Sample)
 - **PHY Transceiver**: IP101GR (Address: 1, Interface: RMII 50MHz Ref Clock)
 - **Console / Flashing Port**: `/dev/ttyUSB0` (115200 baud)
@@ -17,20 +17,15 @@ This sample application demonstrates **100BASE-TX Ethernet networking via RMII**
 
 Before building this sample, ensure your Zephyr workspace is set up and patched for ESP32-P4 v1.0:
 
-1. **Bootstrap Workspace**:
+1. **Bootstrap Workspace** (from workspace root):
    ```bash
-   mkdir -p ~/zephyr-workspace && cd ~/zephyr-workspace
-   git clone -b esp32p4-v1.0-sample https://github.com/ngtkien/zephyr-bootstrap.git
+   mkdir zephyr-ws && cd zephyr-ws
+   git clone https://github.com/ngtkien/zephyr-bootstrap.git
    ./zephyr-bootstrap/setup-zephyr.sh
+   source ./zephyr-env.sh
+   ./zephyr-bootstrap/setup-zephyr.sh --check
    ```
-
-2. **Apply Hardware Patches**:
-   ```bash
-   git clone https://github.com/ngtkien/esp32p4-v1-dev-kit.git
-   cd zephyrproject/zephyr
-   git apply ../../esp32p4-v1-dev-kit/patches/0001-esp32p4-function-ev-v1.0-soc-support.patch
-   git apply ../../esp32p4-v1-dev-kit/patches/0002-esp32p4-function-ev-v1.0-ethernet-support.patch
-   ```
+   Setup tự clone BSP, `west init -l BSP`, `west update` và apply `patches/*.patch`. Không `git apply` tay.
 
 ---
 

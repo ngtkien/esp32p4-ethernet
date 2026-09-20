@@ -2,18 +2,21 @@
 set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-WORKSPACE_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+WORKSPACE_ROOT="$SCRIPT_DIR"
+while [[ "$WORKSPACE_ROOT" != "/" && ! -f "$WORKSPACE_ROOT/zephyr-env.sh" ]]; do
+    WORKSPACE_ROOT="$(dirname "$WORKSPACE_ROOT")"
+done
 
 # Source Zephyr environment
 if [[ -f "$WORKSPACE_ROOT/zephyr-env.sh" ]]; then
     # shellcheck disable=SC1091
     source "$WORKSPACE_ROOT/zephyr-env.sh"
 else
-    echo "ERROR: zephyr-env.sh not found at $WORKSPACE_ROOT" >&2
+    echo "ERROR: zephyr-env.sh not found. Run ./zephyr-bootstrap/setup-zephyr.sh from workspace root." >&2
     exit 1
 fi
 
-BOARD="${BOARD:-esp32p4_function_ev_board/esp32p4/hpcore}"
+BOARD="${BOARD:-esp32p4_function_ev_v1/esp32p4/hpcore}"
 BUILD_DIR="${BUILD_DIR:-$SCRIPT_DIR/build}"
 
 echo "=========================================="
