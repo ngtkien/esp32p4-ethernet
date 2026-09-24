@@ -33,5 +33,6 @@ west build \
     "$SCRIPT_DIR" "$@"
 
 echo ""
-echo "Build complete! To flash to ESP32-P4 on /dev/ttyUSB2, run:"
-echo "  ./flash.sh"
+echo "Build complete! To flash to ESP32-P4, run:"
+echo "  ./flash.sh            # default port /dev/ttyUSB0"
+echo "  ./flash.sh /dev/ttyX  # or ESPPORT=/dev/ttyX ./flash.sh"
